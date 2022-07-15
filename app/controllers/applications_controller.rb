@@ -3,12 +3,13 @@ class ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
     @pets = @application.pets
+    @cart = Cart.new(session[:cart])
+    @pets_search = []
     
-    if params[:pet_name_search] != nil
+    if params[:pet_name_search].present?
       @pets_search = Pet.case_insenstive_search(params[:pet_name_search])
-    else
-      @pets_search = []
     end
+
   end
 
   def new
