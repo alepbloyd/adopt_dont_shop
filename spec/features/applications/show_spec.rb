@@ -11,6 +11,7 @@ RSpec.describe 'application show' do
       city: "Washington",
       zip_code: 20005,
       state: "District of Columbia",
+      zip_code: 34589,
       applicant_bio: "Hey lemme have that cat or else",
       application_status: "Pending"
     )
@@ -41,13 +42,14 @@ RSpec.describe 'application show' do
     expect(page).to have_content(application_1.street_address)
     expect(page).to have_content(application_1.city)
     expect(page).to have_content(application_1.state)
+
     
     within '#search-result-1' do
       expect(page).to have_content(pet_1.name)
       click_link "#{pet_1.name}"
       expect(current_path).to eq("/pets/#{pet_1.id}")
     end
-    
+
   end
 
   it 'has a section to search for pets by name, and when I click submit, I am taken back to the application show page and shown the pet whose names match my search' do
@@ -72,9 +74,9 @@ RSpec.describe 'application show' do
     pet_3 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'BeethovTESTen', shelter_id: shelter.id)
 
     pet_4 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'No', shelter_id: shelter.id)
-    
+
     pet_5 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Nope', shelter_id: shelter.id)
-    
+
     pet_6 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Not this one', shelter_id: shelter.id)
 
     visit "/applications/#{application_1.id}"
@@ -115,9 +117,9 @@ RSpec.describe 'application show' do
     pet_3 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'BeethovTEsTen', shelter_id: shelter.id)
 
     pet_4 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'No', shelter_id: shelter.id)
-    
+
     pet_5 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Nope', shelter_id: shelter.id)
-    
+
     pet_6 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Not this one', shelter_id: shelter.id)
 
     visit "/applications/#{application_1.id}"
@@ -159,9 +161,9 @@ RSpec.describe 'application show' do
     pet_3 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'BeethovTEsTen', shelter_id: shelter.id)
 
     pet_4 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'No', shelter_id: shelter.id)
-    
+
     pet_5 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Nope', shelter_id: shelter.id)
-    
+
     pet_6 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Not this one', shelter_id: shelter.id)
 
     visit "/applications/#{application_1.id}"
@@ -169,7 +171,7 @@ RSpec.describe 'application show' do
     fill_in "pet_name_search", with: "test"
 
     click_on "Pet Name Search"
-    
+
     within '#search-result-1' do
       click_on "Adopt this Pet"
     end
