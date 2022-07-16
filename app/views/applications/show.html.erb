@@ -22,12 +22,8 @@ Bio: <%= @application.application_status%>
 <p id="pet-<%=index+1%>"><%= link_to "#{pet.name}", "/pets/#{pet.id}"%></p>
 <% end %>
 
-<div id="pet-cart"> 
-  <p>Added pets:</p>
-  <%= @cart.each_with_index do |pet,index|%>
-    <%= pet.name%>
-  <% end %>
-</div>
+
+
 
 
 <p> Pet name search: </p>
@@ -39,10 +35,10 @@ Bio: <%= @application.application_status%>
 <%= @pets_search.each_with_index do |pet,index|%>
 <div id="search-result-<%=index+1%>">
   <p><%= pet.name%></p>
-  <p><%= button_to "Adopt this Pet", 
+  <p><%= button_to "Adopt this Pet",
   "/cart?app_id=#{@application.id}&pet_id=#{pet.id}", method: :patch%>
 
-<%# above line is not working and needs to add a row to the application/pet join 
+<%# above line is not working and needs to add a row to the application/pet join
 
 Or is that what has to happen when the submit button is clicked? probably%>
 </div>

@@ -25,12 +25,12 @@ ActiveRecord::Schema.define(version: 2022_07_14_200136) do
   end
 
   create_table "applications", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "street_address"
-    t.string "city"
-    t.string "state"
-    t.integer "zip_code"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "street_address", null: false
+    t.string "city", null: false
+    t.string "state", null: false
+    t.integer "zip_code", null: false
     t.text "applicant_bio"
     t.string "application_status", default: "In Progress"
     t.datetime "created_at", null: false
