@@ -50,12 +50,8 @@ RSpec.describe 'can create and fill out applications' do
     click_button 'Create Application'
 
     #expect(current_path).to eq("/applications/#{application_1.id}")
-    expect(page).to have_content("#{application_1.first_name}")
-    expect(page).to_not have_content("#{application_1.last_name}")
-    expect(page).to have_content("#{application_1.street_address}")
-    expect(page).to have_content("#{application_1.city}")
-    expect(page).to have_content("#{application_1.state}")
-    expect(page).to have_content("#{application_1.zip_code}")
+    expect(page).to have_content('Error')
+    expect(page).to have_content('blank')
 
 
     # it keeps getting an id numberr after applications for the error error_message. Don't know what to call id on
