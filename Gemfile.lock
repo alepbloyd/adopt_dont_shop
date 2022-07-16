@@ -240,6 +240,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   capybara
   coffee-rails (~> 4.2)
+  factory_bot
   factory_bot_rails
   faker!
   jbuilder (~> 2.5)

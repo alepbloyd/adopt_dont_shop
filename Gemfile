@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 2.5'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
+gem 'factory_bot'
+
 gem 'factory_bot_rails'
 
 # Use Capistrano for deployment
