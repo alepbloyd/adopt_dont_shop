@@ -38,6 +38,8 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+Faker::Config.random = Random.new(42)
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

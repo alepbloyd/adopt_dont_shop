@@ -9,6 +9,7 @@ RSpec.describe 'application show' do
       last_name: "Boyd",
       street_address: "123 Sesame Street",
       city: "Washington",
+      zip_code: 20005,
       state: "District of Columbia",
       zip_code: 34589,
       applicant_bio: "Hey lemme have that cat or else",
@@ -29,33 +30,24 @@ RSpec.describe 'application show' do
 
     visit "/applications/#{application_1.id}"
 
+    fill_in "pet_name_search", with: "TEST"
+
+    save_and_open_page
+
+    click_on "Pet Name Search"
+
+
     expect(page).to have_content(application_1.first_name)
     expect(page).to have_content(application_1.last_name)
     expect(page).to have_content(application_1.street_address)
     expect(page).to have_content(application_1.city)
     expect(page).to have_content(application_1.state)
-    expect(page).to have_content(application_1.applicant_bio)
 
-    within '#pet-1' do
+    
+    within '#search-result-1' do
       expect(page).to have_content(pet_1.name)
       click_link "#{pet_1.name}"
       expect(current_path).to eq("/pets/#{pet_1.id}")
-    end
-
-    visit "/applications/#{application_1.id}"
-
-    within '#pet-2' do
-      expect(page).to have_content(pet_2.name)
-      click_link "#{pet_2.name}"
-      expect(current_path).to eq("/pets/#{pet_2.id}")
-    end
-
-    visit "/applications/#{application_1.id}"
-
-    within '#pet-3' do
-      expect(page).to have_content(pet_3.name)
-      click_link "#{pet_3.name}"
-      expect(current_path).to eq("/pets/#{pet_3.id}")
     end
 
   end
@@ -186,15 +178,18 @@ RSpec.describe 'application show' do
 
     expect(current_path).to eq("/applications/#{application_1.id}")
 
-    expect(page).to have_content(pet_1.name)
+    fill_in "pet_name_search", with: "beet"
 
-    # within '#pet-cart' do
-    #   expect(page).to_not have_content(pet_2.name)
-    #   expect(page).to_not have_content(pet_3.name)
-    #   expect(page).to_not have_content(pet_4.name)
-    #   expect(page).to_not have_content(pet_5.name)
-    #   expect(page).to_not have_content(pet_6.name)
-    # end
+    click_on "Pet Name Search"
+
+    within '#search-result-1' do
+      click_on "Adopt this Pet"
+    end
+
+    within '#pet-cart' do
+      expect(page).to have_content(pet_1.name)
+      expect(page).to have_content(pet_3.name)
+    end
 
   end
 
