@@ -13,31 +13,36 @@ Shelter.destroy_all
 Veterinarian.destroy_all
 VeterinaryOffice.destroy_all
 
-application_1 = Application.create!(
-  first_name: "Alex",
-  last_name: "Boyd",
-  street_address: "123 Sesame Street",
-  city: "Washington",
-  zip_code: 20005,
-  state: "District of Columbia",
-  applicant_bio: "Hey lemme have that cat or else",
-  application_status: "Pending"
-)
 
-shelter_1 = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+@shelters = []
+@applications = []
+@pets = []
+@application_pets = []
 
-pet_1 = Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucitestlle Bald', shelter_id: shelter_1.id)
+(1..5).each do
+  @shelters << FactoryBot.create(:shelter)
+end
 
-pet_2 = Pet.create!(adoptable: true, age: 3, breed: 'doberman', name: 'TEST', shelter_id: shelter_1.id)
+@shelters.each do |shelter|
+  (1..20).each do 
+    @pets << FactoryBot.create(:pet, shelter: shelter)
+  end
+end
 
-pet_3 = Pet.create!(adoptable: true, age: 2, breed: 'saint bernard', name: 'BeethovTeSten', shelter_id: shelter_1.id)
+(1..50).each do
+  @applications << FactoryBot.create(:application)
+end
 
-pet_4 = Pet.create!(adoptable: true, age: 2, breed: 'saint bernard', name: 'No', shelter_id: shelter_1.id)
+def get_random_pet
+  @pets.sample
+end
 
-pet_5 = Pet.create!(adoptable: true, age: 2, breed: 'saint bernard', name: 'Nope', shelter_id: shelter_1.id)
+def get_random_application
+  @applications.sample
+end
 
-pet_6 = Pet.create!(adoptable: true, age: 2, breed: 'saint bernard', name: 'Not this one', shelter_id: shelter_1.id)
+# require 'pry'; binding.pry 
 
-ApplicationPet.create!(application: application_1, pet: pet_1)
-ApplicationPet.create!(application: application_1, pet: pet_2)
-ApplicationPet.create!(application: application_1, pet: pet_3)
+(1..30).each do
+  @application_pets << FactoryBot.create(:application_pet, application: get_random_application, pet: get_random_pet)
+end
