@@ -12,20 +12,13 @@ State: <%= @application.state%>
 Zip: <%= @application.zip_code%>
 </p>
 <p>
-Bio: <%= @application.applicant_bio%>
+Application Status: <%= @application.application_status%>
 </p>
-<p>
-Bio: <%= @application.application_status%>
-</p>
-<p> Pets applied for: </p>
-<%= @pets.each_with_index do |pet,index| %>
-<p id="pet-<%=index+1%>"><%= link_to "#{pet.name}", "/pets/#{pet.id}"%></p>
-<% end %>
 
 <div id="pet-cart"> 
-  <p>Added pets:</p>
-  <%= @cart.each_with_index do |pet,index|%>
-    <%= pet.name%>
+  <h2>Pet Cart:</h2>
+  <%= cart.contents.each do |key,value|%>
+    <p id="pet-cart-item"><%= link_to "#{Pet.find(key).name}", "/pets/#{Pet.find(key).id}" %></p>
   <% end %>
 </div>
 
@@ -38,12 +31,8 @@ Bio: <%= @application.application_status%>
 
 <%= @pets_search.each_with_index do |pet,index|%>
 <div id="search-result-<%=index+1%>">
-  <p><%= pet.name%></p>
+  <p><%= link_to "#{pet.name}", "/pets/#{pet.id}"%></p>
   <p><%= button_to "Adopt this Pet", 
   "/cart?app_id=#{@application.id}&pet_id=#{pet.id}", method: :patch%>
-
-<%# above line is not working and needs to add a row to the application/pet join 
-
-Or is that what has to happen when the submit button is clicked? probably%>
 </div>
 <% end %>
