@@ -45,8 +45,6 @@ def get_random_application
   @applications.sample
 end
 
-# require 'pry'; binding.pry 
-
 (1..30).each do
   @application_pets << FactoryBot.create(:application_pet, application: get_random_application, pet: get_random_pet)
 end
