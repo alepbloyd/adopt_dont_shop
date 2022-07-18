@@ -2,7 +2,7 @@ class Admin::ApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
-    @application_pets = @application.application_pets
+    @application_pets = @application.application_pets.order_by_recently_created
     @pets = @application.pets
   end
 
