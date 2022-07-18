@@ -4,27 +4,37 @@
 
 <%= @application_pets.each_with_index do |pet,index|%>
 
-  <p><%= pet.pet_name%> </p>
+  <div id="pet-<%=index+1%>">
+    <p><%= pet.pet_name%> </p>
 
-  <p>Decision: <%= pet.pet_app_status%></p>
+    <p>Decision: <%= pet.pet_app_status%></p>
+
     <p>
-    <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
-      <%= form.hidden_field :pet_app_status, value: "Approved"%>
-      <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
-      <%= form.hidden_field :application_id, value: @application.id%>
-      <%= form.submit "Approve This Pet"%>
-    <% end %>
+      <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
+        <%= form.hidden_field :pet_app_status, value: "Approved"%>
+        <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
+        <%= form.hidden_field :application_id, value: @application.id%>
+
+        <% if pet.pet_app_status != "Approved"%>
+          <%= form.submit "Approve This Pet"%>
+        <% end %>
+
+      <% end %>
     </p>
 
     <p>
-    <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
-      <%= form.hidden_field :pet_app_status, value: "Rejected"%>
-      <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
-      <%= form.hidden_field :application_id, value: @application.id%>
-      <%= form.submit "Reject This Pet"%>
-    <% end %>
-    </p>
+      <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
+        <%= form.hidden_field :pet_app_status, value: "Rejected"%>
+        <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
+        <%= form.hidden_field :application_id, value: @application.id%>
 
+        <% if pet.pet_app_status != "Rejected"%>
+          <%= form.submit "Reject This Pet"%>
+        <% end %>
+
+      <% end %>
+    </p>
+  </div>
     <br><br>
 
 <% end %>

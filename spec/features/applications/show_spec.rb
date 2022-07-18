@@ -32,7 +32,7 @@ RSpec.describe 'application show' do
 
     fill_in "pet_name_search", with: "TEST"
 
-    save_and_open_page
+    # save_and_open_page
 
     click_on "Pet Name Search"
 
