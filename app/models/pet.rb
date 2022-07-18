@@ -13,6 +13,18 @@ class Pet < ApplicationRecord
     where(adoptable: true)
   end
 
+  def current_app_status
+
+    # get application id (instance variable @application)
+    # get pet id (self)
+    # ActiveRecord to get that row on join table
+
+
+    # require 'pry'; binding.pry 
+    # application_pets = ApplicationPet.where(pet_id: self.id)
+    # a = ApplicationPet.joins(:applications).where(pet_id: id).where(application_id: id)
+  end
+
   def self.case_insenstive_search(term)
     where("lower(name) LIKE ?", "%#{term.downcase}%")
   end

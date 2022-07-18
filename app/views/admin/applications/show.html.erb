@@ -2,12 +2,33 @@
 
 <h2> Application ID: <%= @application.id%> </h2>
 
-<%= @pets.each_with_index do |pet,index|%>
-  <div id="pet-<%=index+1%>">
-    <p> <%="Pet: #{pet.name} (#{pet.breed}, #{pet.age})" %> </p>
-    <p> <%= link_to "Approve This Pet", "/admin/applications/#{@application.id}/update?pet_id=#{pet.id}&application_id=#{@application.id}&action=approve"%> </p>
-  </div>
+<%= @application_pets.each_with_index do |pet,index|%>
+
+  <p><%= pet.pet_name%> </p>
+
+  <p>Decision: <%= pet.pet_app_status%></p>
+    <p>
+    <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
+      <%= form.hidden_field :pet_app_status, value: "Approved"%>
+      <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
+      <%= form.hidden_field :application_id, value: @application.id%>
+      <%= form.submit "Approve This Pet"%>
+    <% end %>
+    </p>
+
+    <p>
+    <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
+      <%= form.hidden_field :pet_app_status, value: "Rejected"%>
+      <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
+      <%= form.hidden_field :application_id, value: @application.id%>
+      <%= form.submit "Reject This Pet"%>
+    <% end %>
+    </p>
+
+    <br><br>
+
 <% end %>
+
 
 <%# fix above - need to have link patch pet status on application (on the join table)
 
