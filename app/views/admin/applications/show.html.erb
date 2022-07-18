@@ -3,5 +3,10 @@
 <h2> Application ID: <%= @application.id%> </h2>
 
 <%= @pets.each_with_index do |pet,index|%>
-  <p> <%="Pet: #{pet.name} (#{pet.breed}, #{pet.age})" %> </p>
+  <p id="pet-<%=index+1%>"> <%="Pet: #{pet.name} (#{pet.breed}, #{pet.age})" %> </p>
+  <p> <%= link_to "Approve This Pet", "/admin/applications/#{@application.id}"%> </p>
 <% end %>
+
+<%# fix above - need to have link patch pet status on application (on the join table)
+
+need to create a migration to add pet/application status%>
