@@ -1,0 +1,7 @@
+<h1> Admin Application Page </h2>
+
+<h2> Application ID: <%= @application.id%> </h2>
+
+<%= @pets.each_with_index do |pet,index|%>
+  <p> <%="Pet: #{pet.name} (#{pet.breed}, #{pet.age})" %> </p>
+<% end %>
