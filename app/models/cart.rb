@@ -14,8 +14,4 @@ class Cart
     @contents[id.to_s] = count + 1
   end
 
-  def show_pet
-    "hello"
-  end
-
 end

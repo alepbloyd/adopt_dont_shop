@@ -1,0 +1,40 @@
+<h1> Admin Application Page </h2>
+
+<h2> Application ID: <%= @application.id%> </h2>
+
+<%= @application_pets.each_with_index do |pet,index|%>
+
+  <div id="pet-<%=index+1%>">
+    <p><%= pet.pet_name%> </p>
+
+    <p>Decision: <%= pet.pet_app_status%></p>
+
+    <p>
+      <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
+        <%= form.hidden_field :pet_app_status, value: "Approved"%>
+        <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
+        <%= form.hidden_field :application_id, value: @application.id%>
+
+        <% if pet.pet_app_status != "Approved"%>
+          <%= form.submit "Approve This Pet"%>
+        <% end %>
+
+      <% end %>
+    </p>
+
+    <p>
+      <%= form_with url: "/applicationpets", method: :patch, local: true do |form|%> 
+        <%= form.hidden_field :pet_app_status, value: "Rejected"%>
+        <%= form.hidden_field :pet_id, value: "#{pet.pet_id}"%>
+        <%= form.hidden_field :application_id, value: @application.id%>
+
+        <% if pet.pet_app_status != "Rejected"%>
+          <%= form.submit "Reject This Pet"%>
+        <% end %>
+
+      <% end %>
+    </p>
+  </div>
+    <br><br>
+
+<% end %>
