@@ -15,6 +15,15 @@ class ApplicationsController < ApplicationController
   def new
   end
 
+  def update
+    @application = Application.find(params[:id])
+    @pets = Pet.search(params[:search])
+    @application.pets << @pets
+    redirect_to "/applications/#{@application.id}"
+  end
+
+
+
   def create
     @application = Application.new(app_params)
       if @application.save

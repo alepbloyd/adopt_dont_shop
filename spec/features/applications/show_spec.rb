@@ -239,9 +239,16 @@ RSpec.describe 'application show' do
     end
 
     within '#pet-cart' do
-      expect(page).to have_content(pet_1.name)
-      expect(page).to have_content(pet_3.name)
+      #expect(page).to have_content(pet_1.name)
+      #expect(page).to have_content(pet_3.name)
 
+      fill_in "applicant_bio", with: "I love animals"
+
+      expect(page).to have_button("Submit Application")
+
+     click_on 'Submit Application'
+
+     expect(cuurent_path).to eq("/applications/#{application}")
 
     end
 
