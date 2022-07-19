@@ -1,5 +1,11 @@
 class ApplicationsController < ApplicationController
 
+  def admin_show
+    @application = Application.find(params[:id])
+    @application_pets = @application.application_pets.order_by_recently_created
+    @pets = @application.pets
+  end
+
   def show
     @application = Application.find(params[:id])
     @pets = @application.pets
