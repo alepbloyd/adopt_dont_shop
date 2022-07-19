@@ -14,6 +14,12 @@ Zip: <%= @application.zip_code%>
 <p>
 Application Status: <%= @application.application_status%>
 </p>
+<p>
+Pets interested in adopting: <%= @application.pets.name %>
+</p>
+<p>
+Why are you a good fit: <%=@application.applicant_bio%>
+</p>
 
 
 <div id="pet-cart">
@@ -41,6 +47,7 @@ Application Status: <%= @application.application_status%>
 
 <p> Why You're a good fit: </p>
 <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |form|%>
+<%= form.hidden_field :application_status, value: "Pending" %>
 <%= form.text_field :applicant_bio%>
 <%= form.submit "Submit Application"%>
 <% end %>

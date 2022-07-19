@@ -189,7 +189,9 @@ RSpec.describe 'application show' do
     within '#pet-cart' do
       expect(page).to have_content(pet_1.name)
       expect(page).to have_content(pet_3.name)
+
     end
+  end
 
   it 'when I add one or more pets I see a section to submit my application and why I would be a good fit and the status changes to pending' do
     application_1 = Application.create!(
@@ -200,7 +202,7 @@ RSpec.describe 'application show' do
       zip_code: 20005,
       state: "District of Columbia",
       applicant_bio: "Hey lemme have that cat or else",
-      application_status: "Pending"
+      #expect(page).to have_button("Submit Application")
                                         )
 
     shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
@@ -219,40 +221,17 @@ RSpec.describe 'application show' do
 
     visit "/applications/#{application_1.id}"
 
-    fill_in "pet_name_search", with: "test"
+    fill_in "pet_name_search", with: "Lucitestlle Bald"
 
     click_on "Pet Name Search"
 
-    within '#search-result-1' do
-      click_on "Adopt this Pet"
-    end
+    click_on "Adopt this Pet"
 
     expect(current_path).to eq("/applications/#{application_1.id}")
-
-    fill_in "pet_name_search", with: "beet"
-
-    click_on "Pet Name Search"
-
-    within '#search-result-1' do
-      click_on "Adopt this Pet"
-
-    end
-
-    within '#pet-cart' do
-      #expect(page).to have_content(pet_1.name)
-      #expect(page).to have_content(pet_3.name)
-
-      fill_in "applicant_bio", with: "I love animals"
-
-      expect(page).to have_button("Submit Application")
+    expect(page).to have_button("Submit Application")
 
      click_on 'Submit Application'
 
-     expect(cuurent_path).to eq("/applications/#{application}")
-
-    end
-
-
+     expect(page).to have_content("Pending")
+   end
   end
-
-end

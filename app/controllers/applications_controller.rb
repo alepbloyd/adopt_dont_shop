@@ -19,6 +19,9 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     @pets = Pet.search(params[:search])
     @application.pets << @pets
+    @application.update(application_status: params[:application_status])
+    @application.update(applicant_bio: params[:applicant_bio])
+
     redirect_to "/applications/#{@application.id}"
   end
 
