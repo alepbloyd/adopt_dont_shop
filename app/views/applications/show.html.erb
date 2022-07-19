@@ -14,9 +14,15 @@ Zip: <%= @application.zip_code%>
 <p>
 Application Status: <%= @application.application_status%>
 </p>
+<p>
+Pets interested in adopting: <%= @application.pets.name %>
+</p>
+<p>
+Why are you a good fit: <%=@application.applicant_bio%>
+</p>
 
 
-<div id="pet-cart"> 
+<div id="pet-cart">
   <h2>Pet Cart:</h2>
   <%= cart.contents.each do |key,value|%>
     <p id="pet-cart-item"><%= link_to "#{Pet.find(key).name}", "/pets/#{Pet.find(key).id}" %></p>
@@ -33,7 +39,15 @@ Application Status: <%= @application.application_status%>
 <%= @pets_search.each_with_index do |pet,index|%>
 <div id="search-result-<%=index+1%>">
   <p><%= link_to "#{pet.name}", "/pets/#{pet.id}"%></p>
-  <p><%= button_to "Adopt this Pet", 
+  <p><%= button_to "Adopt this Pet",
   "/cart?app_id=#{@application.id}&pet_id=#{pet.id}", method: :patch%>
 </div>
+<% end %>
+
+
+<p> Why You're a good fit: </p>
+<%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |form|%>
+<%= form.hidden_field :application_status, value: "Pending" %>
+<%= form.text_field :applicant_bio%>
+<%= form.submit "Submit Application"%>
 <% end %>

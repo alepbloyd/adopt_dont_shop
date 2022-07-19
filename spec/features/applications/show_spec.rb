@@ -43,7 +43,7 @@ RSpec.describe 'application show' do
     expect(page).to have_content(application_1.city)
     expect(page).to have_content(application_1.state)
 
-    
+
     within '#search-result-1' do
       expect(page).to have_content(pet_1.name)
       click_link "#{pet_1.name}"
@@ -189,8 +189,49 @@ RSpec.describe 'application show' do
     within '#pet-cart' do
       expect(page).to have_content(pet_1.name)
       expect(page).to have_content(pet_3.name)
-    end
 
+    end
   end
 
-end
+  it 'when I add one or more pets I see a section to submit my application and why I would be a good fit and the status changes to pending' do
+    application_1 = Application.create!(
+      first_name: "Alex",
+      last_name: "Boyd",
+      street_address: "123 Sesame Street",
+      city: "Washington",
+      zip_code: 20005,
+      state: "District of Columbia",
+      applicant_bio: "Hey lemme have that cat or else",
+      #expect(page).to have_button("Submit Application")
+                                        )
+
+    shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+
+    pet_1 = Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucitestlle Bald', shelter_id: shelter.id)
+
+    pet_2 = Pet.create!(adoptable: true, age: 3, breed: 'doberman', name: 'TEST', shelter_id: shelter.id)
+
+    pet_3 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'BeethovTEsTen', shelter_id: shelter.id)
+
+    pet_4 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'No', shelter_id: shelter.id)
+
+    pet_5 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Nope', shelter_id: shelter.id)
+
+    pet_6 = Pet.create!(adoptable: false, age: 2, breed: 'saint bernard', name: 'Not this one', shelter_id: shelter.id)
+
+    visit "/applications/#{application_1.id}"
+
+    fill_in "pet_name_search", with: "Lucitestlle Bald"
+
+    click_on "Pet Name Search"
+
+    click_on "Adopt this Pet"
+
+    expect(current_path).to eq("/applications/#{application_1.id}")
+    expect(page).to have_button("Submit Application")
+
+     click_on 'Submit Application'
+
+     expect(page).to have_content("Pending")
+   end
+  end
