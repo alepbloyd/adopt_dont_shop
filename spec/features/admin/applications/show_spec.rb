@@ -67,8 +67,8 @@ RSpec.describe 'admin application show page' do
     application_1 = FactoryBot.create(:application)
 
     application_pet_1 = FactoryBot.create(:application_pet, application: application_1, pet: pet_1)
-    application_pet_1 = FactoryBot.create(:application_pet, application: application_1, pet: pet_2)
-    application_pet_1 = FactoryBot.create(:application_pet, application: application_1, pet: pet_3)
+    application_pet_2 = FactoryBot.create(:application_pet, application: application_1, pet: pet_2)
+    application_pet_3 = FactoryBot.create(:application_pet, application: application_1, pet: pet_3)
 
     visit "/admin/applications/#{application_1.id}"
 
@@ -81,6 +81,54 @@ RSpec.describe 'admin application show page' do
     within "#pet-1" do
       expect(page).to_not have_content("Reject This Pet")
       expect(page).to have_content("Rejected")
+    end
+
+  end
+
+  it 'approving or rejecting a pet-application status on one application does not impact pet-application status on other applications' do
+
+    shelter_1 = FactoryBot.create(:shelter)
+
+    pet_1 = FactoryBot.create(:pet, shelter: shelter_1)
+    pet_2 = FactoryBot.create(:pet, shelter: shelter_1)
+    pet_3 = FactoryBot.create(:pet, shelter: shelter_1)
+    pet_4 = FactoryBot.create(:pet, shelter: shelter_1)
+
+    application_1 = FactoryBot.create(:application)
+
+    application_2 = FactoryBot.create(:application)
+
+    application_pet_1 = FactoryBot.create(:application_pet, application: application_1, pet: pet_1)
+    application_pet_2 = FactoryBot.create(:application_pet, application: application_1, pet: pet_2)
+    application_pet_3 = FactoryBot.create(:application_pet, application: application_1, pet: pet_3)
+
+    application_pet_4 = FactoryBot.create(:application_pet, application: application_2, pet: pet_1)
+    application_pet_5 = FactoryBot.create(:application_pet, application: application_2, pet: pet_2)
+    application_pet_6 = FactoryBot.create(:application_pet, application: application_2, pet: pet_3)
+
+    visit "/admin/applications/#{application_1.id}"
+
+    within '#pet-1' do
+      click_button("Approve This Pet")
+    end
+
+    expect(current_path).to eq("/admin/applications/#{application_1.id}")
+
+    within "#pet-1" do
+      expect(page).to_not have_content("Approve This Pet")
+      expect(page).to have_content("Approved")
+    end
+
+    visit "/admin/applications/#{application_2.id}"
+
+    within '#pet-1' do
+      expect(page).to have_content("To be decided")
+    end
+
+    visit "/admin/applications/#{application_1.id}"
+
+    within '#pet-1' do
+      expect(page).to have_content("Approved")
     end
 
   end
