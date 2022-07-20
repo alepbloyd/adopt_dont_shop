@@ -21,6 +21,14 @@ RSpec.describe Shelter, type: :model do
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
+
+    @application_1 = FactoryBot.create(:application)
+    @application_2 = FactoryBot.create(:application)
+    @application_3 = FactoryBot.create(:application)
+
+    @application_pet_1 = FactoryBot.create(:application_pet, pet: @pet_1, application: @application_1)
+    @application_pet_2 = FactoryBot.create(:application_pet, pet: @pet_1, application: @application_2)
+    @application_pet_3 = FactoryBot.create(:application_pet, pet: @pet_1, application: @application_3)
   end
 
   describe 'class methods' do
@@ -66,6 +74,12 @@ RSpec.describe Shelter, type: :model do
     describe '.shelter_pets_filtered_by_age' do
       it 'filters the shelter pets based on given params' do
         expect(@shelter_1.shelter_pets_filtered_by_age(5)).to eq([@pet_4])
+      end
+    end
+
+    describe '.with_pending_apps' do
+      it 'shows pets with pending apps' do
+        expect(Shelter.with_pending_apps).to eq([])
       end
     end
 
