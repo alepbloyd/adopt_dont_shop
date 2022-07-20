@@ -46,3 +46,7 @@
  .card-row {
   padding: 2px;
  }
+
+ .application-submit {
+  max-width: fit-content;
+ }
