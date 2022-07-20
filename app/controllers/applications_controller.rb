@@ -13,7 +13,7 @@ class ApplicationsController < ApplicationController
     @pets_search = []
 
     if params[:pet_name_search].present?
-      @pets_search = Pet.case_insenstive_search(params[:pet_name_search])
+      @pets_search = Pet.case_insensitive_search(params[:pet_name_search])
     end
 
   end

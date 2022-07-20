@@ -14,4 +14,8 @@ class Cart
     @contents[id.to_s] = count + 1
   end
 
+  def pet_name(id)
+    Pet.find(id).name
+  end
+
 end
