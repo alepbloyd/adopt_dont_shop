@@ -13,7 +13,7 @@ class Pet < ApplicationRecord
     where(adoptable: true)
   end
 
-  def self.case_insenstive_search(term)
+  def self.case_insensitive_search(term)
     where("lower(name) LIKE ?", "%#{term.downcase}%")
   end
 end
