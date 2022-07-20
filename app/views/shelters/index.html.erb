@@ -1,18 +1,61 @@
-<h1>All Shelters</h1>
+<div class="options-bar container-fluid">
+  <div class="row">
+    <div class="col-lg-4">
+      <h1>All Shelters</h1>
+    </div>
 
-<%= link_to "Sort by number of pets", "/shelters?sort=pet_count" %>
+    <div class="col-sm-4 my-auto">
+      <%= link_to "Sort by number of pets", "/shelters?sort=pet_count", class: "btn btn-primary"%>
+    </div>
 
-<%= form_with url: "/shelters", method: :get, local: true do |f| %>
-  <%= f.label :search %>
-  <%= f.text_field :search %>
-  <%= f.submit "Search" %>
-<% end %>
-
-<% @shelters.each do |shelter| %>
-  <div id="shelter-<%= shelter.id %>">
-    <h3><%= shelter.name %></h3>
-    <p>Created at: <%= shelter.created_at %></p>
-    <%= link_to "Update #{shelter.name}", "/shelters/#{shelter.id}/edit" %>
-    <%= link_to "Delete #{shelter.name}", "/shelters/#{shelter.id}", method: :delete %>
+    <div class="col-sm-4 my-auto">
+      <%= form_with url: "/shelters", method: :get, local: true do |f| %>
+        <%= f.label :search %>
+        <%= f.text_field :search %>
+        <%= f.submit "Search" %>
+      <% end %>
+    </div>
   </div>
-<% end %>
+
+  </div>
+
+  <div class="main-content container">
+    
+    <% @shelters.each do |shelter| %>
+
+      <div class="shelter-card container border mt-2">
+
+        <div class="shelter-name row justify-content-center">
+          <%= shelter.name.titleize %>
+        </div>
+
+        <div id="shelter-<%= shelter.id%>">
+
+        <div class="card-row row">
+           Number of Pets: <%= shelter.pets.count %>
+        </div>
+
+          <div class="card-row row">
+            Created at: <%= shelter.created_at %> </span>
+          </div>
+
+          <div class="row">
+
+            <div class="col">
+              <%= link_to "Update #{shelter.name.titleize}", "/shelters/#{shelter.id}/edit",class: "btn btn-secondary btn-md" %>
+              <%= link_to "Delete #{shelter.name.titleize}", "/shelters/#{shelter.id}", method: :delete,class: "btn btn-danger btn-md" %>
+            </div>
+
+            <div class="col">
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    <% end %>
+
+  </div>
+
+</div>

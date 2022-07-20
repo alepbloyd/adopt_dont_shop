@@ -1,16 +1,47 @@
-<%= form_with url: "/applications", method: :post, local: true do |form| %>
-  <%= form.label :first_name %>
-  <%= form.text_field :first_name %>
-  <%= form.label :last_name %>
-  <%= form.text_field :last_name %>
-  <%= form.label :street_address %>
-  <%= form.text_field :street_address %>
-  <%= form.label :city  %>
-  <%= form.text_field :city %>
-  <%= form.label :state %>
-  <%= form.text_field :state %>
-  <%= form.label :zip_code %>
-  <%= form.number_field :zip_code%>
-  <%= form.submit 'Create Application' %>
+<div class="main-content container-fluid">
 
-<% end %>
+<div class="row">
+      <div class="col">
+      <%= form_with url: "/applications", method: :post, local: true do |form| %>
+        <div class="row">
+          <%= form.label :first_name %>
+          <%= form.text_field :first_name %>
+        </div>
+
+        <div class="row">
+          <%= form.label :last_name %>
+          <%= form.text_field :last_name %>
+        </div>
+
+        <div class="row">
+        <%= form.label :street_address %>
+        <%= form.text_field :street_address %>
+        </div>
+
+        <div class="row">
+        <%= form.label :city  %>
+        <%= form.text_field :city %>
+        </div>
+
+        <div class="row">
+        <%= form.label :state %>
+        <%= form.text_field :state %>
+        </div>
+
+        <div class="row">
+        <%= form.label :zip_code %>
+        <%= form.number_field :zip_code%>
+        </div>
+
+        <br><br>
+
+        <div class="row">
+        <%= form.submit 'Create Application',class:"application-submit btn btn-primary" %>
+        </div>
+
+      <% end %>
+      </div>
+      <div class="col">
+      </div>
+</div>
+</div>

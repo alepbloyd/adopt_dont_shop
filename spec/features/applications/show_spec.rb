@@ -11,7 +11,6 @@ RSpec.describe 'application show' do
       city: "Washington",
       zip_code: 20005,
       state: "District of Columbia",
-      zip_code: 34589,
       applicant_bio: "Hey lemme have that cat or else",
       application_status: "Pending"
     )
@@ -30,7 +29,7 @@ RSpec.describe 'application show' do
 
     visit "/applications/#{application_1.id}"
 
-    fill_in "pet_name_search", with: "TEST"
+    fill_in "pet_name_search", with: "Bald"
 
     # save_and_open_page
 
@@ -43,10 +42,11 @@ RSpec.describe 'application show' do
     expect(page).to have_content(application_1.city)
     expect(page).to have_content(application_1.state)
 
+    click_on "Adopt this Pet"
 
-    within '#search-result-1' do
-      expect(page).to have_content(pet_1.name)
-      click_link "#{pet_1.name}"
+    within '#pet-cart' do
+      expect(page).to have_content(pet_1.name.titleize)
+      click_link "#{pet_1.name.titleize}"
       expect(current_path).to eq("/pets/#{pet_1.id}")
     end
 
