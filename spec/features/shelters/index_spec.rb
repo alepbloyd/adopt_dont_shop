@@ -13,9 +13,9 @@ RSpec.describe 'the shelters index' do
   it 'lists all the shelter names' do
     visit "/shelters"
 
-    expect(page).to have_content(@shelter_1.name)
-    expect(page).to have_content(@shelter_2.name)
-    expect(page).to have_content(@shelter_3.name)
+    expect(page).to have_content(@shelter_1.name.titleize)
+    expect(page).to have_content(@shelter_2.name.titleize)
+    expect(page).to have_content(@shelter_3.name.titleize)
   end
 
   it 'lists the shelters by most recently created first' do
@@ -48,26 +48,26 @@ RSpec.describe 'the shelters index' do
     click_link("Sort by number of pets")
 
     expect(page).to have_current_path('/shelters?sort=pet_count')
-    expect(@shelter_1.name).to appear_before(@shelter_3.name)
-    expect(@shelter_3.name).to appear_before(@shelter_2.name)
+    expect(@shelter_1.name.titleize).to appear_before(@shelter_3.name.titleize)
+    expect(@shelter_3.name.titleize).to appear_before(@shelter_2.name.titleize)
   end
 
   it 'has a link to update each shelter' do
     visit "/shelters"
 
     within "#shelter-#{@shelter_1.id}" do
-      expect(page).to have_link("Update #{@shelter_1.name}")
+      expect(page).to have_link("Update #{@shelter_1.name.titleize}")
     end
 
     within "#shelter-#{@shelter_2.id}" do
-      expect(page).to have_link("Update #{@shelter_2.name}")
+      expect(page).to have_link("Update #{@shelter_2.name.titleize}")
     end
 
     within "#shelter-#{@shelter_3.id}" do
-      expect(page).to have_link("Update #{@shelter_3.name}")
+      expect(page).to have_link("Update #{@shelter_3.name.titleize}")
     end
 
-    click_on("Update #{@shelter_1.name}")
+    click_on("Update #{@shelter_1.name.titleize}")
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/edit")
   end
 
@@ -75,20 +75,20 @@ RSpec.describe 'the shelters index' do
     visit "/shelters"
 
     within "#shelter-#{@shelter_1.id}" do
-      expect(page).to have_link("Delete #{@shelter_1.name}")
+      expect(page).to have_link("Delete #{@shelter_1.name.titleize}")
     end
 
     within "#shelter-#{@shelter_2.id}" do
-      expect(page).to have_link("Delete #{@shelter_2.name}")
+      expect(page).to have_link("Delete #{@shelter_2.name.titleize}")
     end
 
     within "#shelter-#{@shelter_3.id}" do
-      expect(page).to have_link("Delete #{@shelter_3.name}")
+      expect(page).to have_link("Delete #{@shelter_3.name.titleize}")
     end
 
-    click_on("Delete #{@shelter_1.name}")
+    click_on("Delete #{@shelter_1.name.titleize}")
     expect(page).to have_current_path("/shelters")
-    expect(page).to_not have_content(@shelter_1.name)
+    expect(page).to_not have_content(@shelter_1.name.titleize)
   end
 
   it 'has a text box to filter results by keyword' do
@@ -102,7 +102,25 @@ RSpec.describe 'the shelters index' do
     fill_in 'Search', with: "RGV"
     click_on("Search")
 
-    expect(page).to have_content(@shelter_2.name)
-    expect(page).to_not have_content(@shelter_1.name)
+    expect(page).to have_content(@shelter_2.name.titleize)
+    expect(page).to_not have_content(@shelter_1.name.titleize)
+  end
+
+  it 'displays number of pets at each shelter' do
+
+    visit '/shelters'
+
+    within "#shelter-#{@shelter_1.id}" do
+      expect(page).to have_content("Number of Pets: 2")
+    end
+
+    within "#shelter-#{@shelter_2.id}" do
+      expect(page).to have_content("Number of Pets: 0")
+    end
+
+    within "#shelter-#{@shelter_3.id}" do
+      expect(page).to have_content("Number of Pets: 1")
+    end
+    
   end
 end
