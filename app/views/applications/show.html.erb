@@ -25,7 +25,7 @@ Why are you a good fit: <%=@application.applicant_bio%>
 <div id="pet-cart">
   <h2>Pet Cart:</h2>
   <%= cart.contents.each do |key,value|%>
-    <p id="pet-cart-item"><%= link_to "#{Pet.find(key).name}", "/pets/#{Pet.find(key).id}" %></p>
+    <p id="pet-cart-item"><%= link_to "#{cart.pet_name(key)}", "/pets/#{key}" %></p>
   <% end %>
 </div>
 
@@ -41,6 +41,7 @@ Why are you a good fit: <%=@application.applicant_bio%>
   <p><%= link_to "#{pet.name}", "/pets/#{pet.id}"%></p>
   <p><%= button_to "Adopt this Pet",
   "/cart?app_id=#{@application.id}&pet_id=#{pet.id}", method: :patch%>
+  <br>
 </div>
 <% end %>
 
