@@ -8,15 +8,15 @@ RSpec.describe 'the pets index' do
 
     visit "/pets"
 
-    expect(page).to have_content(pet_1.name)
-    expect(page).to have_content(pet_1.breed)
+    expect(page).to have_content(pet_1.name.titleize)
+    expect(page).to have_content(pet_1.breed.titleize)
     expect(page).to have_content(pet_1.age)
-    expect(page).to have_content(shelter.name)
+    expect(page).to have_content(shelter.name.titleize)
 
-    expect(page).to have_content(pet_2.name)
-    expect(page).to have_content(pet_2.breed)
+    expect(page).to have_content(pet_2.name.titleize)
+    expect(page).to have_content(pet_2.breed.titleize)
     expect(page).to have_content(pet_2.age)
-    expect(page).to have_content(shelter.name)
+    expect(page).to have_content(shelter.name.titleize)
   end
 
   it 'only lists adoptable pets' do
@@ -27,7 +27,7 @@ RSpec.describe 'the pets index' do
 
     visit "/pets"
 
-    expect(page).to_not have_content(pet_3.name)
+    expect(page).to_not have_content(pet_3.name.titleize)
   end
 
   it 'displays a link to edit each pet' do
@@ -40,7 +40,7 @@ RSpec.describe 'the pets index' do
     expect(page).to have_content("Edit #{pet_1.name}")
     expect(page).to have_content("Edit #{pet_2.name}")
 
-    click_link("Edit #{pet_1.name}")
+    click_link("Edit #{pet_1.name.titleize}")
 
     expect(page).to have_current_path("/pets/#{pet_1.id}/edit")
   end
@@ -52,13 +52,13 @@ RSpec.describe 'the pets index' do
 
     visit '/pets'
 
-    expect(page).to have_content("Delete #{pet_1.name}")
-    expect(page).to have_content("Delete #{pet_2.name}")
+    expect(page).to have_content("Delete #{pet_1.name.titleize}")
+    expect(page).to have_content("Delete #{pet_2.name.titleize}")
 
-    click_link("Delete #{pet_1.name}")
+    click_link("Delete #{pet_1.name.titleize}")
 
     expect(page).to have_current_path("/pets")
-    expect(page).to_not have_content(pet_1.name)
+    expect(page).to_not have_content(pet_1.name.titleize)
   end
 
   it 'has a text box to filter results by keyword' do
@@ -77,9 +77,9 @@ RSpec.describe 'the pets index' do
     fill_in 'Search', with: "Ba"
     click_on("Search")
 
-    expect(page).to have_content(pet_1.name)
-    expect(page).to have_content(pet_2.name)
-    expect(page).to_not have_content(pet_3.name)
+    expect(page).to have_content(pet_1.name.titleize)
+    expect(page).to have_content(pet_2.name.titleize)
+    expect(page).to_not have_content(pet_3.name.titleize)
   end
 
   #user story 2 Starting an Application

@@ -1,15 +1,15 @@
-<div class="container-fluid">
+<div class="options-bar container-fluid">
   <div class="row">
 
     <div class="col-lg-4">
       <h1>All pets</h1>
-    <div>
+    </div>
 
-    <div class="col-sm-4">
-      <%= link_to "Start an Application", "/applications/new" %>
-    <div>
+    <div class="col-sm-4 my-auto">
+      <%= link_to "Start an Application", "/applications/new",class:"btn btn-primary" %>
+    </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-4 my-auto">
       <%= form_with url: "/pets", method: :get, local: true do |f| %>
         <%= f.label :search %>
         <%= f.text_field :search %>
@@ -20,34 +20,44 @@
   </div>
 </div>
 
-<div class="container-fluid">
+<div class="container">
   <% @pets.each do |pet| %>
-    <div class="container border mt-2">
-      <h3><%= pet.name %></h3>
-      <p>Age: <%= pet.age %></p>
-      <p>Breed: <%= pet.breed %></p>
+    <div class="pet-card container border mt-2">
 
-      <% if pet.adoptable %>
-      <%= "Adoptable: Yes!" %>
-      <% else %>
-      <%= "Adoptable: No :("%>
-      <% end %>
+      <div class="pet-name row justify-content-center">
+        <%= pet.name.titleize %>
+      </div>
 
-      <p>You can find <%= pet.name %> at <%= pet.shelter_name %>!</p>
+      <div class="card-row row">
+        Age: <%= pet.age %>
+      </div>
 
-      <%= link_to "Edit #{pet.name}", "/pets/#{pet.id}/edit",class: "btn btn-secondary btn-md" %>
-      <%= link_to "Delete #{pet.name}", "/pets/#{pet.id}", method: :delete,class: "btn btn-danger btn-md" %>
+      <div class="card-row row">
+        Breed: <%= pet.breed.titleize %>
+      </div>
+
+      <div class="card-row row">
+        <% if pet.adoptable %>
+        <%= "Adoptable: Yes!" %>
+        <% else %>
+        <%= "Adoptable: No :("%>
+        <% end %>
+      </div>
+
+      <div class="card-row row">
+        You can find <%= pet.name.titleize %> at <%= pet.shelter_name.titleize %> 
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= link_to "Edit #{pet.name.titleize}", "/pets/#{pet.id}/edit",class: "btn btn-secondary btn-md" %>
+          <%= link_to "Delete #{pet.name.titleize}", "/pets/#{pet.id}", method: :delete,class: "btn btn-danger btn-md" %>
+        </div>
+        <div class="col">
+        </div>
+      </div>
 
     </div>
   <% end %>
 
 </div>
-
-
-
-
-
-
-
-
-
